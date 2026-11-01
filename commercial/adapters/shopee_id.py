@@ -1,13 +1,20 @@
-"""Shopee Indonesia listing adapter — Bahasa ID, title 25–100, keyword library."""
+"""Shopee Indonesia listing adapter — Bahasa ID, title 25–100, keyword library.
+
+``keywords`` / ``keyword_library`` come from :func:`adapters.keyword_engine.build_keywords`.
+Required stems ``organizer laci`` and ``sekat laci`` are pinned there, then the
+listing is scored by :func:`adapters.compliance_gate.gate_listing`. Title and
+bullets are not produced by that path.
+"""
 from __future__ import annotations
 
 from typing import Any
 
 from .compliance_gate import gate_listing, load_rules
+from .keyword_engine import SHOPEE_ID_REQUIRED_KEYWORDS, build_keywords
 
 MARKET = "shopee_id"
 
-REQUIRED_KEYWORDS = ("organizer laci", "sekat laci")
+REQUIRED_KEYWORDS = SHOPEE_ID_REQUIRED_KEYWORDS
 
 
 def _cm_line(sku: dict[str, Any]) -> str:
@@ -82,21 +89,18 @@ def generate(sku: dict[str, Any]) -> dict[str, Any]:
     if len(description) < 100:
         description += " Bahan plastik PET bening yang tahan dipakai di rumah."
 
-    keywords = [
-        "organizer laci",
-        "sekat laci",
-        "kotak penyimpanan laci",
-        "organizer makeup",
-        "organizer dapur",
-        "sekat laci plastik bening",
-        f"set organizer laci {pcs} pcs {n_sizes} ukuran anti slip",
-        "sekat laci bening makeup dapur kamar mandi",
-        "kotak sekat laci hemat ruang",
-    ]
-    # Guarantee required stems
+    kw = build_keywords(sku, MARKET)
+    # Required stems are pinned inside the engine; keep the local check so a
+    # future cut cannot ship a Shopee ID pack without them.
+    keywords = list(kw["keywords"])
     for req in REQUIRED_KEYWORDS:
         if req not in keywords:
             keywords.insert(0, req)
+    library = kw["keyword_library"]
+    primary = list(library.get("primary") or [])
+    for req in reversed(REQUIRED_KEYWORDS):
+        if req not in primary:
+            primary.insert(0, req)
 
     listing = {
         "market": MARKET,
@@ -108,16 +112,10 @@ def generate(sku: dict[str, Any]) -> dict[str, Any]:
         "description": description,
         "keywords": keywords,
         "keyword_library": {
-            "primary": [
-                "organizer laci",
-                "sekat laci",
-                "kotak penyimpanan laci",
-                "organizer makeup",
-                "organizer dapur",
-                "sekat laci plastik bening",
-            ],
-            "long_tail": keywords[6:],
+            "primary": primary,
+            "long_tail": list(library.get("long_tail") or []),
         },
+        "keyword_generation": kw["keyword_generation"],
     }
     rules = load_rules()
     listing["compliance"] = gate_listing(listing, MARKET, rules)

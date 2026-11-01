@@ -2,6 +2,10 @@
 
 SKU JSON → adapters `generate_all` → Markdown Pack + JSON Pack + compliance report.
 
+Amazon US, Shopee ID, and MELI MX `keyword_library` rows come from
+`adapters/keyword_engine.py` (advertools `word_frequency`, `kw_generate`,
+`ad_from_string`), then the same compliance gate as the titles.
+
 ```bash
 cd /workspace/advertools/commercial
 source .venv/bin/activate

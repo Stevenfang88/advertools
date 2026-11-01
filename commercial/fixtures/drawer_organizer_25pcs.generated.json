@@ -26,32 +26,111 @@
       "backend_search_terms": "makeup vanity bathroom kitchen office desk storage bins trays dividers nestable modular cabinet organizer silicone pads utensil jewelry cosmetic vanity tray drawer divider",
       "keywords": [
         "drawer organizer",
-        "clear drawer organizers",
-        "plastic drawer organizer set",
-        "makeup drawer organizer",
-        "vanity organizer trays",
-        "bathroom drawer organizer",
-        "kitchen drawer organizer",
-        "desk drawer organizer",
-        "25 piece clear plastic drawer organizer with non slip pads",
-        "4 sizes nestable drawer bins for makeup kitchen office",
-        "modular cabinet drawer storage trays"
+        "clear drawer organizer",
+        "plastic drawer organizer",
+        "drawer organizer makeup",
+        "drawer organizer vanity",
+        "drawer organizer bathroom",
+        "drawer organizer kitchen",
+        "drawer organizer desk",
+        "drawer organizer 25 piece",
+        "drawer organizer 4 sizes",
+        "drawer organizer non slip",
+        "drawer organizer nestable",
+        "drawer organizer makeup vanity",
+        "25 piece clear plastic drawer organizer",
+        "4 sizes non slip nestable drawer organizer"
       ],
       "keyword_library": {
         "primary": [
           "drawer organizer",
-          "clear drawer organizers",
-          "plastic drawer organizer set",
-          "makeup drawer organizer",
-          "vanity organizer trays",
-          "bathroom drawer organizer",
-          "kitchen drawer organizer",
-          "desk drawer organizer"
+          "clear drawer organizer",
+          "plastic drawer organizer",
+          "drawer organizer makeup",
+          "drawer organizer vanity",
+          "drawer organizer bathroom",
+          "drawer organizer kitchen",
+          "drawer organizer desk"
         ],
         "long_tail": [
-          "25 piece clear plastic drawer organizer with non slip pads",
-          "4 sizes nestable drawer bins for makeup kitchen office",
-          "modular cabinet drawer storage trays"
+          "drawer organizer 25 piece",
+          "drawer organizer 4 sizes",
+          "drawer organizer non slip",
+          "drawer organizer nestable",
+          "drawer organizer makeup vanity",
+          "25 piece clear plastic drawer organizer",
+          "4 sizes non slip nestable drawer organizer"
+        ]
+      },
+      "keyword_generation": {
+        "engine": "advertools",
+        "module": "adapters.keyword_engine",
+        "apis": [
+          "word_frequency",
+          "kw_generate",
+          "ad_from_string"
+        ],
+        "market": "amazon_us",
+        "campaign_name": "listing_amazon_us",
+        "match_types": [
+          "Phrase"
+        ],
+        "max_len": 3,
+        "order_matters": true,
+        "products": [
+          "drawer organizer",
+          "clear drawer organizer",
+          "plastic drawer organizer"
+        ],
+        "words": [
+          "makeup",
+          "vanity",
+          "bathroom",
+          "kitchen",
+          "desk",
+          "non slip",
+          "nestable",
+          "25 piece",
+          "4 sizes"
+        ],
+        "scene_words": [
+          "makeup",
+          "vanity",
+          "bathroom",
+          "kitchen",
+          "desk"
+        ],
+        "feature_words": [
+          "non slip",
+          "nestable"
+        ],
+        "spec_words": [
+          "25 piece",
+          "4 sizes"
+        ],
+        "required_stems": [],
+        "word_frequency_top": [
+          "bathroom",
+          "desk",
+          "jewelry",
+          "kitchen",
+          "makeup",
+          "office",
+          "utensil",
+          "vanity",
+          "nestable",
+          "non",
+          "slip",
+          "25"
+        ],
+        "kw_generate_rows": 702,
+        "ad_from_string_slots": [
+          "25 piece clear plastic drawer organizer",
+          "4 sizes non slip nestable drawer organizer"
+        ],
+        "ad_from_string_widths": [
+          39,
+          42
         ]
       },
       "compliance": {
@@ -100,26 +179,106 @@
         "organizer laci",
         "sekat laci",
         "kotak penyimpanan laci",
-        "organizer makeup",
-        "organizer dapur",
-        "sekat laci plastik bening",
-        "set organizer laci 25 pcs 4 ukuran anti slip",
-        "sekat laci bening makeup dapur kamar mandi",
-        "kotak sekat laci hemat ruang"
+        "organizer laci makeup",
+        "organizer laci dapur",
+        "organizer laci kamar mandi",
+        "organizer laci 25 pcs",
+        "organizer laci 4 ukuran",
+        "organizer laci anti slip",
+        "organizer laci bening",
+        "organizer laci makeup dapur",
+        "organizer laci 25 pcs plastik bening",
+        "sekat laci 4 ukuran anti slip"
       ],
       "keyword_library": {
         "primary": [
           "organizer laci",
           "sekat laci",
           "kotak penyimpanan laci",
-          "organizer makeup",
-          "organizer dapur",
-          "sekat laci plastik bening"
+          "organizer laci makeup",
+          "organizer laci dapur",
+          "organizer laci kamar mandi"
         ],
         "long_tail": [
-          "set organizer laci 25 pcs 4 ukuran anti slip",
-          "sekat laci bening makeup dapur kamar mandi",
-          "kotak sekat laci hemat ruang"
+          "organizer laci 25 pcs",
+          "organizer laci 4 ukuran",
+          "organizer laci anti slip",
+          "organizer laci bening",
+          "organizer laci makeup dapur",
+          "organizer laci 25 pcs plastik bening",
+          "sekat laci 4 ukuran anti slip"
+        ]
+      },
+      "keyword_generation": {
+        "engine": "advertools",
+        "module": "adapters.keyword_engine",
+        "apis": [
+          "word_frequency",
+          "kw_generate",
+          "ad_from_string"
+        ],
+        "market": "shopee_id",
+        "campaign_name": "listing_shopee_id",
+        "match_types": [
+          "Phrase"
+        ],
+        "max_len": 3,
+        "order_matters": true,
+        "products": [
+          "organizer laci",
+          "sekat laci",
+          "kotak penyimpanan laci"
+        ],
+        "words": [
+          "makeup",
+          "dapur",
+          "kamar mandi",
+          "meja kerja",
+          "anti slip",
+          "bening",
+          "25 pcs",
+          "4 ukuran"
+        ],
+        "scene_words": [
+          "makeup",
+          "dapur",
+          "kamar mandi",
+          "meja kerja"
+        ],
+        "feature_words": [
+          "anti slip",
+          "bening"
+        ],
+        "spec_words": [
+          "25 pcs",
+          "4 ukuran"
+        ],
+        "required_stems": [
+          "organizer laci",
+          "sekat laci"
+        ],
+        "word_frequency_top": [
+          "dapur",
+          "kamar",
+          "kerja",
+          "makeup",
+          "mandi",
+          "meja",
+          "perhiasan",
+          "anti",
+          "bening",
+          "slip",
+          "25",
+          "4"
+        ],
+        "kw_generate_rows": 552,
+        "ad_from_string_slots": [
+          "organizer laci 25 pcs plastik bening",
+          "sekat laci 4 ukuran anti slip"
+        ],
+        "ad_from_string_widths": [
+          36,
+          29
         ]
       },
       "compliance": {
@@ -166,28 +325,105 @@
       "description": "Organiza cajones con un set de 25 bandejas transparentes en 4 tamanos. Ideal para maquillaje, bano, cocina y oficina. Incluye almohadillas antideslizantes. Limpieza con pano humedo o enjuague a mano. Uso domestico de organizacion — sin afirmaciones medicas ni de seguridad infantil.",
       "keywords": [
         "organizador de cajones",
-        "organizadores de plastico transparente",
-        "set organizador cajon",
-        "organizador maquillaje",
-        "organizador cocina",
         "separadores de cajones",
-        "set 25 organizadores cajones 4 tamanos antideslizante",
-        "organizador cajon debajo del fregadero",
-        "bandejas transparentes maquillaje cocina oficina"
+        "bandejas transparentes",
+        "organizador de cajones maquillaje",
+        "organizador de cajones cocina",
+        "organizador de cajones bano",
+        "organizador de cajones 25 pzs",
+        "organizador de cajones 4 tamanos",
+        "organizador de cajones antideslizante",
+        "organizador de cajones transparente",
+        "organizador de cajones maquillaje cocina",
+        "plastico transparente separadores de cajones",
+        "organizador de cajones maquillaje bano"
       ],
       "keyword_library": {
         "primary": [
           "organizador de cajones",
-          "organizadores de plastico transparente",
-          "set organizador cajon",
-          "organizador maquillaje",
-          "organizador cocina",
-          "separadores de cajones"
+          "separadores de cajones",
+          "bandejas transparentes",
+          "organizador de cajones maquillaje",
+          "organizador de cajones cocina",
+          "organizador de cajones bano"
         ],
         "long_tail": [
-          "set 25 organizadores cajones 4 tamanos antideslizante",
-          "organizador cajon debajo del fregadero",
-          "bandejas transparentes maquillaje cocina oficina"
+          "organizador de cajones 25 pzs",
+          "organizador de cajones 4 tamanos",
+          "organizador de cajones antideslizante",
+          "organizador de cajones transparente",
+          "organizador de cajones maquillaje cocina",
+          "plastico transparente separadores de cajones",
+          "organizador de cajones maquillaje bano"
+        ]
+      },
+      "keyword_generation": {
+        "engine": "advertools",
+        "module": "adapters.keyword_engine",
+        "apis": [
+          "word_frequency",
+          "kw_generate",
+          "ad_from_string"
+        ],
+        "market": "meli_mx",
+        "campaign_name": "listing_meli_mx",
+        "match_types": [
+          "Phrase"
+        ],
+        "max_len": 3,
+        "order_matters": true,
+        "products": [
+          "organizador de cajones",
+          "separadores de cajones",
+          "bandejas transparentes"
+        ],
+        "words": [
+          "maquillaje",
+          "cocina",
+          "bano",
+          "oficina",
+          "antideslizante",
+          "transparente",
+          "25 pzs",
+          "4 tamanos"
+        ],
+        "scene_words": [
+          "maquillaje",
+          "cocina",
+          "bano",
+          "oficina"
+        ],
+        "feature_words": [
+          "antideslizante",
+          "transparente"
+        ],
+        "spec_words": [
+          "25 pzs",
+          "4 tamanos"
+        ],
+        "required_stems": [],
+        "word_frequency_top": [
+          "bano",
+          "cocina",
+          "escritorio",
+          "fregadero",
+          "joyas",
+          "maquillaje",
+          "oficina",
+          "antideslizante",
+          "transparente",
+          "25",
+          "4",
+          "cajones"
+        ],
+        "kw_generate_rows": 552,
+        "ad_from_string_slots": [
+          "organizador de cajones 25 pzs",
+          "plastico transparente separadores de cajones"
+        ],
+        "ad_from_string_widths": [
+          29,
+          44
         ]
       },
       "compliance": {
@@ -484,5 +720,5 @@
     }
   },
   "all_compliance_pass": true,
-  "source_fixture": "/workspace/advertools/commercial/fixtures/drawer_organizer_25pcs.json"
+  "source_fixture": "/workspace/commercial/fixtures/drawer_organizer_25pcs.json"
 }

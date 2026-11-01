@@ -9,6 +9,7 @@ compliance gate.
 | File | Role |
 | --- | --- |
 | `compliance_gate.py` | Load `rules/compliance.yaml`; title length + banned claims + market style |
+| `keyword_engine.py` | Core-market keywords via advertools (`word_frequency`, `kw_generate`, `ad_from_string`) |
 | `amazon_en.py` | Amazon US EN — title ≤75, 5 bullets, item highlights, backend terms |
 | `shopee_id.py` | Shopee ID — Bahasa title 25–100, keywords (`organizer laci`, `sekat laci`) |
 | `shopee_th.py` | Shopee TH — Thai title 25–100, keywords (`กล่องแบ่งลิ้นชัก`, `ที่จัดระเบียบลิ้นชัก`) |
@@ -48,6 +49,30 @@ from adapters import amazon_en, shopee_id, shopee_th, shopee_ph, meli_mx, meli_b
 result = generate_from_path()  # uses golden drawer fixture
 am = amazon_en.generate(sku_dict)
 ```
+
+## Keywords (Amazon US, Shopee ID, MELI MX)
+
+Those three markets do **not** keep a hand-written keyword list. `keyword_engine.build_keywords`
+expands seeds with upstream advertools, and the adapter then runs `gate_listing`
+(banned claims + title/bullet length). Title and bullet copy stay in the adapters.
+
+Seed phrases are product stems plus an intent lexicon. `word_frequency` drops any
+intent the SKU corpus does not contain (scenes, pad / clear / multi-size features,
+piece count). `kw_generate` (Phrase, `max_len=3`) permutes stems × surviving words.
+`ad_from_string` slices a count + stem blurb into long-tail slots.
+
+| Market | Product stems (`kw_generate` products) | Required stems |
+| --- | --- | --- |
+| `amazon_us` | `drawer organizer`, `clear drawer organizer`, `plastic drawer organizer` | — |
+| `shopee_id` | `organizer laci`, `sekat laci`, `kotak penyimpanan laci` | `organizer laci`, `sekat laci` |
+| `meli_mx` | `organizador de cajones`, `separadores de cajones`, `bandejas transparentes` | — |
+
+Intent examples the drawer fixture keeps when the scene is present: EN `makeup`,
+`vanity`, `bathroom`, `kitchen`, `desk`; ID `makeup`, `dapur`, `kamar mandi`;
+ES `maquillaje`, `cocina`, `bano`. Feature seeds such as `non slip` / `anti slip` /
+`antideslizante` are included only when the SKU has pads.
+
+Shopee TH, Shopee PH, MELI BR, and MELI AR still use adapter-local keyword lists.
 
 ## Hard rules (reminders)
 

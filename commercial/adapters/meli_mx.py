@@ -1,9 +1,16 @@
-"""Mercado Libre Mexico (ES) listing adapter — title ≤60, no punctuation, Spanish-first."""
+"""Mercado Libre Mexico (ES) listing adapter — title ≤60, no punctuation, Spanish-first.
+
+``keywords`` / ``keyword_library`` come from :func:`adapters.keyword_engine.build_keywords`
+(advertools ``word_frequency``, ``kw_generate``, ``ad_from_string``), then the
+whole listing is scored by :func:`adapters.compliance_gate.gate_listing`.
+Title and bullets are not produced by that path.
+"""
 from __future__ import annotations
 
 from typing import Any
 
 from .compliance_gate import gate_listing, load_rules
+from .keyword_engine import build_keywords
 
 MARKET = "meli_mx"
 
@@ -75,17 +82,7 @@ def generate(sku: dict[str, Any]) -> dict[str, Any]:
         f"medicas ni de seguridad infantil."
     )
 
-    keywords = [
-        "organizador de cajones",
-        "organizadores de plastico transparente",
-        "set organizador cajon",
-        "organizador maquillaje",
-        "organizador cocina",
-        "separadores de cajones",
-        f"set {pcs} organizadores cajones {n_sizes} tamanos antideslizante",
-        "organizador cajon debajo del fregadero",
-        "bandejas transparentes maquillaje cocina oficina",
-    ]
+    kw = build_keywords(sku, MARKET)
 
     listing = {
         "market": MARKET,
@@ -95,8 +92,9 @@ def generate(sku: dict[str, Any]) -> dict[str, Any]:
         "bullets": bullets,
         "highlights": bullets,
         "description": description,
-        "keywords": keywords,
-        "keyword_library": {"primary": keywords[:6], "long_tail": keywords[6:]},
+        "keywords": kw["keywords"],
+        "keyword_library": kw["keyword_library"],
+        "keyword_generation": kw["keyword_generation"],
     }
     rules = load_rules()
     listing["compliance"] = gate_listing(listing, MARKET, rules)

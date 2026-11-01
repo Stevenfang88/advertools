@@ -46,6 +46,17 @@ def _merged_keyword_library(markets: dict[str, Any]) -> dict[str, Any]:
     return {
         "primary": primary,
         "long_tail": long_tail,
+        "generation": {
+            "engine": "advertools",
+            "module": "adapters.keyword_engine",
+            "apis": ["word_frequency", "kw_generate", "ad_from_string"],
+            "markets": ["amazon_us", "shopee_id", "meli_mx"],
+            "notes": (
+                "EN / ID / ES_MX terms are generated from product stems and "
+                "SKU-backed intent words, then compliance-gated. Shopee ID pins "
+                "organizer laci and sekat laci. TH/PH/BR/AR lists stay in their adapters."
+            ),
+        },
         "do_not_translate": [
             "OK Home Organizer",
             "PET",

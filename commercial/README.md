@@ -31,6 +31,18 @@ python scripts/smoke_adapters.py
 ```
 See `adapters/README.md`.
 
+### Keyword generation (Amazon US, Shopee ID, MELI MX)
+
+`adapters/keyword_engine.py` builds `keywords` and `keyword_library` for the three
+core markets. The lists are not hand-maintained. Upstream advertools is called
+as-is (no edits under `advertools/`):
+
+1. `word_frequency` — rank a SKU corpus (localized scenes, pad/clear/size features, piece count) and drop intent seeds that do not occur.
+2. `kw_generate` — Phrase-match permutations of product stems × those words (`max_len=3`).
+3. `ad_from_string` — split a count + stem blurb into long-tail slots.
+
+The adapter still runs `compliance_gate.gate_listing` (banned claims, title and bullet lengths). Shopee ID always pins `organizer laci` and `sekat laci`. TH/PH/BR/AR keyword lists are unchanged.
+
 ## Step 2 — Listing Pack pipeline
 Turns a SKU JSON into a T1-aligned multi-market Listing Pack (Markdown + JSON)
 plus a compliance report. Adapters own generation; pipeline owns pack export and

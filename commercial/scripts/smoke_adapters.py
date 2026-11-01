@@ -2,6 +2,7 @@
 """Smoke tests for Step 1 adapters against the drawer golden fixture."""
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -10,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from adapters.generate_all import generate_from_path  # noqa: E402
+from adapters.keyword_engine import CORE_MARKETS, build_keywords  # noqa: E402
 from adapters.shopee_id import REQUIRED_KEYWORDS as SHOPEE_ID_KW  # noqa: E402
 from adapters.shopee_ph import REQUIRED_KEYWORDS as SHOPEE_PH_KW  # noqa: E402
 from adapters.shopee_th import REQUIRED_KEYWORDS as SHOPEE_TH_KW  # noqa: E402
@@ -123,6 +125,46 @@ def main() -> None:
     _assert_meli("MELI MX", markets["meli_mx"])
     _assert_meli("MELI BR", markets["meli_br"])
     _assert_meli("MELI AR", markets["meli_ar"])
+
+    # Core markets: keywords come from advertools, not a frozen adapter list.
+    head_stems = {
+        "amazon_us": "drawer organizer",
+        "shopee_id": "organizer laci",
+        "meli_mx": "organizador de cajones",
+    }
+    for key in CORE_MARKETS:
+        pack = markets[key]
+        gen = pack.get("keyword_generation") or {}
+        if gen.get("engine") != "advertools":
+            fail(f"{key} keyword_generation.engine={gen.get('engine')!r}")
+        for api in ("word_frequency", "kw_generate", "ad_from_string"):
+            if api not in (gen.get("apis") or []):
+                fail(f"{key} keyword path missing {api}")
+        kws = pack.get("keywords") or []
+        lib = pack.get("keyword_library") or {}
+        joined = list(lib.get("primary") or []) + list(lib.get("long_tail") or [])
+        if joined != kws:
+            fail(f"{key} keywords != primary + long_tail")
+        stem = head_stems[key]
+        if not any(stem in kw and kw != stem for kw in kws):
+            fail(f"{key} keywords are not expansions of {stem!r}")
+        rows = int(gen.get("kw_generate_rows") or 0)
+        if rows <= len(kws):
+            fail(f"{key} kw_generate_rows={rows} not larger than emitted list")
+        slots = gen.get("ad_from_string_slots") or []
+        if not slots or not any(slot in kws for slot in slots):
+            fail(f"{key} ad_from_string slots did not land in keywords")
+        if not gen.get("words"):
+            fail(f"{key} kw_generate received no intent words")
+    ok("amazon_us / shopee_id / meli_mx keywords from advertools")
+
+    sku = json.loads((ROOT / "fixtures" / "drawer_organizer_25pcs.json").read_text(encoding="utf-8"))
+    sku_no_makeup = dict(sku)
+    sku_no_makeup["scenes"] = [s for s in (sku.get("scenes") or []) if "makeup" not in s and "vanity" not in s]
+    dropped = " ".join(build_keywords(sku_no_makeup, "amazon_us")["keywords"])
+    if "makeup" in dropped or "vanity" in dropped:
+        fail("word_frequency did not drop makeup/vanity when those scenes are absent")
+    ok("Amazon intent words follow SKU scenes")
 
     # Banned claims across all generated string fields
     banned = [

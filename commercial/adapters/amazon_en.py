@@ -1,9 +1,16 @@
-"""Amazon US (EN) listing adapter — title ≤75, 5 bullets, backend ≤249 bytes."""
+"""Amazon US (EN) listing adapter — title ≤75, 5 bullets, backend ≤249 bytes.
+
+``keywords`` / ``keyword_library`` come from :func:`adapters.keyword_engine.build_keywords`
+(advertools ``word_frequency``, ``kw_generate``, ``ad_from_string``), then the
+whole listing is scored by :func:`adapters.compliance_gate.gate_listing`.
+Title and bullets are not produced by that path.
+"""
 from __future__ import annotations
 
 from typing import Any
 
 from .compliance_gate import gate_listing, load_rules
+from .keyword_engine import build_keywords
 
 MARKET = "amazon_us"
 
@@ -95,19 +102,7 @@ def generate(sku: dict[str, Any]) -> dict[str, Any]:
     while len(backend.encode("utf-8")) > 249:
         backend = backend.rsplit(" ", 1)[0]
 
-    keywords = [
-        "drawer organizer",
-        "clear drawer organizers",
-        "plastic drawer organizer set",
-        "makeup drawer organizer",
-        "vanity organizer trays",
-        "bathroom drawer organizer",
-        "kitchen drawer organizer",
-        "desk drawer organizer",
-        f"{pcs} piece clear plastic drawer organizer with non slip pads",
-        f"{n_sizes} sizes nestable drawer bins for makeup kitchen office",
-        "modular cabinet drawer storage trays",
-    ]
+    kw = build_keywords(sku, MARKET)
 
     listing = {
         "market": MARKET,
@@ -119,8 +114,9 @@ def generate(sku: dict[str, Any]) -> dict[str, Any]:
         "description": description,
         "item_highlights": item_highlights,
         "backend_search_terms": backend,
-        "keywords": keywords,
-        "keyword_library": {"primary": keywords[:8], "long_tail": keywords[8:]},
+        "keywords": kw["keywords"],
+        "keyword_library": kw["keyword_library"],
+        "keyword_generation": kw["keyword_generation"],
     }
     rules = load_rules()
     listing["compliance"] = gate_listing(listing, MARKET, rules)
