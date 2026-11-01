@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stevenfang88.local/advertools/commercial/schemas/sku.v0.schema.json",
+  "title": "Commercial SKU v0 — 抽屉收纳",
+  "description": "Frozen draft SKU shape for Adv-0 foundation. Listability standards finalized only by 总指挥小马.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sku_id",
+    "category",
+    "locale",
+    "marketplace",
+    "title",
+    "bullet_points",
+    "description",
+    "attributes",
+    "images",
+    "pricing",
+    "compliance"
+  ],
+  "properties": {
+    "sku_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"
+    },
+    "category": {
+      "type": "string",
+      "const": "抽屉收纳"
+    },
+    "locale": {
+      "type": "string",
+      "enum": ["zh-CN", "en-US", "es-MX", "pt-BR"]
+    },
+    "marketplace": {
+      "type": "string",
+      "enum": ["amazon", "shopee", "meli"]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Hard length limits enforced by compliance YAML per marketplace (AM 75 / Shopee 100 / MELI ~60)."
+    },
+    "bullet_points": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 500
+      }
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 5000
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["material", "dimensions_cm", "compartment_count", "color"],
+      "properties": {
+        "material": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "dimensions_cm": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["length", "width", "height"],
+          "properties": {
+            "length": { "type": "number", "exclusiveMinimum": 0 },
+            "width": { "type": "number", "exclusiveMinimum": 0 },
+            "height": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        },
+        "compartment_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "color": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "stackable": { "type": "boolean" },
+        "bpa_free_claimed": {
+          "type": "boolean",
+          "description": "If true, absolute BPA-free marketing claims are still banned by compliance; keep factual lab refs only outside listing copy."
+        }
+      }
+    },
+    "images": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "role"],
+        "properties": {
+          "url": { "type": "string", "format": "uri" },
+          "role": {
+            "type": "string",
+            "enum": ["main", "detail", "lifestyle", "size_chart", "other"]
+          }
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currency", "list_price"],
+      "properties": {
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "list_price": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sale_price": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checked_at", "status"],
+      "properties": {
+        "checked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pass", "fail", "pending"]
+        },
+        "rule_hits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["rule_id", "severity", "message"],
+            "properties": {
+              "rule_id": { "type": "string" },
+              "severity": {
+                "type": "string",
+                "enum": ["error", "warn"]
+              },
+              "message": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

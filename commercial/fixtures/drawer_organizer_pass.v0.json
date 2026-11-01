@@ -1,0 +1,37 @@
+{
+  "sku_id": "DRW-ORG-001",
+  "category": "抽屉收纳",
+  "locale": "zh-CN",
+  "marketplace": "amazon",
+  "title": "可调节抽屉分隔收纳盒 多格化妆品整理盒 透明",
+  "bullet_points": [
+    "自由调节隔板，适配抽屉深度",
+    "透明可视，快速找到物品",
+    "PP 材质，日常干湿分区收纳"
+  ],
+  "description": "适用于卧室与办公桌抽屉的可调节分隔收纳盒。多格设计方便分类化妆品、文具与小物件。请按说明书清洁，勿用于烹饪或特殊用途。",
+  "attributes": {
+    "material": "PP",
+    "dimensions_cm": { "length": 32.0, "width": 21.0, "height": 5.5 },
+    "compartment_count": 6,
+    "color": "透明",
+    "stackable": true,
+    "bpa_free_claimed": false
+  },
+  "images": [
+    {
+      "url": "https://example.com/images/drw-org-001-main.jpg",
+      "role": "main"
+    }
+  ],
+  "pricing": {
+    "currency": "USD",
+    "list_price": 18.99,
+    "sale_price": 15.99
+  },
+  "compliance": {
+    "checked_at": "2026-11-01T13:00:00Z",
+    "status": "pending",
+    "rule_hits": []
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stevenfang88.local/schemas/sku.schema.json",
+  "title": "ListingSKU",
+  "type": "object",
+  "required": [
+    "brand",
+    "product_name_en",
+    "piece_count",
+    "sizes",
+    "material",
+    "care",
+    "scenes",
+    "forbidden_claims"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "brand": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_name_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "piece_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "pad_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sizes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "qty",
+          "dims_in"
+        ],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "dims_in": {
+            "type": "object",
+            "required": [
+              "l",
+              "w",
+              "h"
+            ],
+            "properties": {
+              "l": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number"
+              },
+              "h": {
+                "type": "number"
+              }
+            }
+          },
+          "dims_cm_approx": {
+            "type": "object",
+            "properties": {
+              "l": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number"
+              },
+              "h": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "material": {
+      "type": "string"
+    },
+    "pad_material": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "care": {
+      "type": "string"
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "certifications_claimed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "forbidden_claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

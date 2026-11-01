@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advertools 中文演示壳 — Listing Pack</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #fff;
+      --ink: #1a1f36;
+      --muted: #5c6578;
+      --line: #e2e6ef;
+      --accent: #2563eb;
+      --accent-h: #1d4ed8;
+      --green: #16a34a;
+      --red: #dc2626;
+      --yellow: #ca8a04;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(26, 31, 54, 0.08);
+      font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #eef2ff 0%, var(--bg) 220px);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 20px 8px;
+    }
+    header h1 { margin: 0 0 6px; font-size: 1.55rem; }
+    header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px 48px;
+      display: grid;
+      gap: 18px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 22px;
+    }
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 800px) {
+      .grid2 { grid-template-columns: 1fr; }
+    }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    input, textarea, button, select {
+      font: inherit;
+    }
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fafbff;
+      color: var(--ink);
+    }
+    input:focus, textarea:focus {
+      outline: 2px solid #bfdbfe;
+      border-color: var(--accent);
+    }
+    textarea { min-height: 72px; resize: vertical; }
+    textarea.sizes { min-height: 160px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+      align-items: center;
+    }
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 11px 18px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.primary:hover { background: var(--accent-h); }
+    button.primary:disabled { opacity: 0.55; cursor: wait; }
+    button.ghost {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+    button.ghost:hover { background: #f8fafc; }
+    .hint { font-size: 0.8rem; color: var(--muted); }
+    .status {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .status.show { display: block; }
+    .status.green { background: #dcfce7; color: #166534; }
+    .status.yellow { background: #fef9c3; color: #854d0e; }
+    .status.red { background: #fee2e2; color: #991b1b; }
+    .light {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f1f5f9;
+    }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      display: inline-block;
+    }
+    .dot.green { background: var(--green); }
+    .dot.red { background: var(--red); }
+    .dot.yellow { background: var(--yellow); }
+    .market {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .market header.row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      padding: 0;
+    }
+    .market h3 { margin: 0; font-size: 1rem; }
+    .title-box, .desc-box, .kw-box {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 8px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .bullets { margin: 6px 0 0; padding-left: 1.2rem; }
+    .bullets li { margin: 4px 0; }
+    .reasons { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+    .err {
+      color: #991b1b;
+      background: #fee2e2;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: none;
+    }
+    .err.show { display: block; }
+    #results { display: none; }
+    #results.show { display: block; }
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 32px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>中文演示壳 · 三站 Listing Pack</h1>
+    <p>填写 SKU → 一键生成 Amazon EN / Shopee ID / MELI MX 文案、词库与合规灯（本地小服务，无支付）</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>① SKU 表单 <span class="hint">（默认预填抽屉 25pcs fixture）</span></h2>
+      <div class="err" id="formErr"></div>
+      <form id="skuForm">
+        <div class="grid2">
+          <div>
+            <label for="brand">品牌</label>
+            <input id="brand" name="brand" required />
+          </div>
+          <div>
+            <label for="product_name_en">英文品名</label>
+            <input id="product_name_en" name="product_name_en" required />
+          </div>
+          <div>
+            <label for="piece_count">件数</label>
+            <input id="piece_count" name="piece_count" type="number" min="1" required />
+          </div>
+          <div>
+            <label for="pad_count">防滑垫数量（可选）</label>
+            <input id="pad_count" name="pad_count" type="number" min="0" />
+          </div>
+          <div>
+            <label for="material">材质</label>
+            <input id="material" name="material" required />
+          </div>
+          <div>
+            <label for="pad_material">垫材质 / 颜色</label>
+            <div class="grid2">
+              <input id="pad_material" name="pad_material" placeholder="pad_material" />
+              <input id="color" name="color" placeholder="color" />
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <label for="care">护理说明</label>
+          <textarea id="care" name="care" required></textarea>
+        </div>
+        <div style="margin-top:12px">
+          <label for="scenes">使用场景（逗号分隔）</label>
+          <textarea id="scenes" name="scenes" required></textarea>
+        </div>
+        <div style="margin-top:12px">
+          <label for="sizes_json">尺寸 JSON（label / qty / dims_in）</label>
+          <textarea id="sizes_json" class="sizes" name="sizes_json" required></textarea>
+        </div>
+        <div style="margin-top:12px">
+          <label for="forbidden_claims">禁止宣称（逗号分隔，缺省用 fixture）</label>
+          <textarea id="forbidden_claims" name="forbidden_claims"></textarea>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary" id="genBtn">一键生成三站文案</button>
+          <button type="button" class="ghost" id="resetBtn">恢复默认 fixture</button>
+          <span class="hint" id="busyHint"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" id="results">
+      <h2>② 生成结果</h2>
+      <div class="status" id="overallStatus"></div>
+      <div class="actions" style="margin-top:0;margin-bottom:14px">
+        <button type="button" class="primary" id="dlBtn">下载 Markdown</button>
+        <span class="hint" id="metaHint"></span>
+      </div>
+      <div id="markets"></div>
+      <div class="card" style="box-shadow:none;margin-top:8px;background:#f8fafc">
+        <h2 style="margin-bottom:8px">合并词库 · primary</h2>
+        <div id="kwMerged" class="kw-box"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Step 3 demo_shell · 复用 commercial/pipeline.build_pack · 口令见环境变量 DEMO_SHELL_PASSWORD
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let lastResult = null;
+
+    function authHeaders() {
+      // Browser already sends Basic Auth after the 401 challenge.
+      return { "Content-Type": "application/json" };
+    }
+
+    async function loadFixture() {
+      const r = await fetch("/api/fixture", { headers: authHeaders() });
+      if (!r.ok) throw new Error("加载 fixture 失败 " + r.status);
+      const d = await r.json();
+      $("brand").value = d.brand || "";
+      $("product_name_en").value = d.product_name_en || "";
+      $("piece_count").value = d.piece_count ?? "";
+      $("pad_count").value = d.pad_count ?? "";
+      $("material").value = d.material || "";
+      $("pad_material").value = d.pad_material || "";
+      $("color").value = d.color || "";
+      $("care").value = d.care || "";
+      $("scenes").value = d.scenes || "";
+      $("sizes_json").value = d.sizes_json || "[]";
+      $("forbidden_claims").value = d.forbidden_claims || "";
+    }
+
+    function lightHtml(color, text) {
+      return `<span class="light"><span class="dot ${color}"></span>${text}</span>`;
+    }
+
+    function marketLightLabel(m) {
+      if (m.compliance_pass) return lightHtml("green", "合规通过");
+      return lightHtml("red", "合规失败");
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function renderResults(data) {
+      lastResult = data;
+      $("results").classList.add("show");
+      const st = $("overallStatus");
+      st.className = "status show " + data.overall_light;
+      let msg = data.listable
+        ? "整体 listable = true（三站合规均通过）"
+        : "整体 listable = false（存在合规失败）";
+      if (data.listable && data.human_review_count > 0) {
+        msg += ` · 黄标：需人工润色（${data.human_review_count} 条与 T1 手写稿差异）`;
+      }
+      st.textContent = msg;
+      $("metaHint").textContent = data.generated_at
+        ? `生成时间 ${data.generated_at}（Asia/Shanghai）`
+        : "";
+
+      const order = ["amazon_us", "shopee_id", "meli_mx"];
+      const host = $("markets");
+      host.innerHTML = "";
+      for (const key of order) {
+        const m = data.markets[key];
+        if (!m) continue;
+        const copyPayload = [
+          m.title,
+          "",
+          ...(m.bullets || []).map((b, i) => `${i + 1}. ${b}`),
+          "",
+          m.description || "",
+        ].join("\n");
+        const el = document.createElement("div");
+        el.className = "market";
+        el.innerHTML = `
+          <header class="row">
+            <h3>${escapeHtml(m.label)}</h3>
+            ${marketLightLabel(m)}
+          </header>
+          <div><strong>标题</strong>
+            <div class="title-box">${escapeHtml(m.title)}</div>
+          </div>
+          <div><strong>要点</strong>
+            <ul class="bullets">${(m.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
+          </div>
+          <div><strong>描述摘要</strong>
+            <div class="desc-box">${escapeHtml(m.description_preview || "")}${(m.description || "").length > 400 ? "…" : ""}</div>
+          </div>
+          <div><strong>词库 primary</strong>
+            <div class="kw-box">${escapeHtml((m.keywords_primary || []).join(" · "))}</div>
+          </div>
+          <div class="reasons">合规原因：${
+            (m.compliance_reasons || []).length
+              ? escapeHtml(m.compliance_reasons.join("；"))
+              : "（无额外原因）"
+          }${m.title_length != null ? ` · 标题长度 ${m.title_length}` : ""}</div>
+          <div class="actions">
+            <button type="button" class="ghost copy-btn">复制本站文案</button>
+          </div>
+        `;
+        el.querySelector(".copy-btn").addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(copyPayload);
+            el.querySelector(".copy-btn").textContent = "已复制";
+            setTimeout(() => (el.querySelector(".copy-btn").textContent = "复制本站文案"), 1200);
+          } catch (e) {
+            alert("复制失败：" + e);
+          }
+        });
+        host.appendChild(el);
+      }
+
+      const lib = data.keyword_library || {};
+      const primary = lib.primary || {};
+      const lines = Object.keys(primary).map(
+        (lang) => `${lang}: ${(primary[lang] || []).join(", ")}`
+      );
+      $("kwMerged").textContent = lines.join("\n") || "（无）";
+    }
+
+    $("skuForm").addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      $("formErr").classList.remove("show");
+      $("genBtn").disabled = true;
+      $("busyHint").textContent = "生成中…";
+      let sizes;
+      try {
+        sizes = JSON.parse($("sizes_json").value);
+      } catch (e) {
+        $("formErr").textContent = "尺寸 JSON 无法解析：" + e;
+        $("formErr").classList.add("show");
+        $("genBtn").disabled = false;
+        $("busyHint").textContent = "";
+        return;
+      }
+      const payload = {
+        brand: $("brand").value,
+        product_name_en: $("product_name_en").value,
+        piece_count: Number($("piece_count").value),
+        pad_count: $("pad_count").value === "" ? undefined : Number($("pad_count").value),
+        material: $("material").value,
+        pad_material: $("pad_material").value,
+        color: $("color").value,
+        care: $("care").value,
+        scenes: $("scenes").value,
+        sizes,
+        forbidden_claims: $("forbidden_claims").value,
+      };
+      try {
+        const r = await fetch("/api/generate", {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify(payload),
+        });
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || ("HTTP " + r.status));
+        renderResults(data);
+      } catch (e) {
+        $("formErr").textContent = String(e.message || e);
+        $("formErr").classList.add("show");
+      } finally {
+        $("genBtn").disabled = false;
+        $("busyHint").textContent = "";
+      }
+    });
+
+    $("resetBtn").addEventListener("click", () => loadFixture().catch(alert));
+
+    $("dlBtn").addEventListener("click", () => {
+      if (!lastResult) return;
+      if (lastResult.download_url) {
+        window.location.href = lastResult.download_url;
+        return;
+      }
+      if (lastResult.md) {
+        const blob = new Blob([lastResult.md], { type: "text/markdown;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "listing_pack.md";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+    });
+
+    loadFixture().catch((e) => {
+      $("formErr").textContent = "无法加载默认 fixture：" + e;
+      $("formErr").classList.add("show");
+    });
+  </script>
+</body>
+</html>

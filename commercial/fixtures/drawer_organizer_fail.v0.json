@@ -1,0 +1,36 @@
+{
+  "sku_id": "DRW-ORG-BAD-001",
+  "category": "抽屉收纳",
+  "locale": "zh-CN",
+  "marketplace": "amazon",
+  "title": "IKEA同款儿童医疗级BPA free绝对无BPA洗碗机可用超长大标题测试超过七十五字符限制的抽屉收纳",
+  "bullet_points": [
+    "BPA free 100%无BPA",
+    "可放洗碗机清洗",
+    "适合婴儿与儿童医疗场景"
+  ],
+  "description": "假社证同款宣传文案示例，含宜家商标与医疗儿童宣称，应全部 fail。",
+  "attributes": {
+    "material": "未知",
+    "dimensions_cm": { "length": 30.0, "width": 20.0, "height": 5.0 },
+    "compartment_count": 4,
+    "color": "白",
+    "stackable": false,
+    "bpa_free_claimed": true
+  },
+  "images": [
+    {
+      "url": "https://example.com/images/bad-main.jpg",
+      "role": "main"
+    }
+  ],
+  "pricing": {
+    "currency": "USD",
+    "list_price": 9.99
+  },
+  "compliance": {
+    "checked_at": "2026-11-01T13:00:00Z",
+    "status": "pending",
+    "rule_hits": []
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "sku_id": "DRW-ORG-MELI-001",
+  "category": "抽屉收纳",
+  "locale": "es-MX",
+  "marketplace": "meli",
+  "title": "Organizador de cajón ajustable 6 divisiones",
+  "bullet_points": [
+    "Divisores ajustables",
+    "Material PP transparente",
+    "Ideal para maquillaje y oficina"
+  ],
+  "description": "Organizador de cajón con divisiones ajustables para uso doméstico y de oficina.",
+  "attributes": {
+    "material": "PP",
+    "dimensions_cm": { "length": 30.0, "width": 20.0, "height": 5.0 },
+    "compartment_count": 6,
+    "color": "transparente",
+    "stackable": true,
+    "bpa_free_claimed": false
+  },
+  "images": [
+    {
+      "url": "https://example.com/images/meli-main.jpg",
+      "role": "main"
+    }
+  ],
+  "pricing": {
+    "currency": "MXN",
+    "list_price": 249.0
+  },
+  "compliance": {
+    "checked_at": "2026-11-01T13:00:00Z",
+    "status": "pending",
+    "rule_hits": []
+  }
+}

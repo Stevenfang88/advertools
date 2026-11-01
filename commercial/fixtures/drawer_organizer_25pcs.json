@@ -1,0 +1,85 @@
+{
+  "brand": "OK Home Organizer",
+  "product_name_en": "25-Piece Clear Plastic Drawer Organizer Set",
+  "piece_count": 25,
+  "pad_count": 100,
+  "sizes": [
+    {
+      "label": "large",
+      "qty": 3,
+      "dims_in": {
+        "l": 9,
+        "w": 6,
+        "h": 2
+      },
+      "dims_cm_approx": {
+        "l": 22.9,
+        "w": 15.2,
+        "h": 5.1
+      }
+    },
+    {
+      "label": "medium_long",
+      "qty": 6,
+      "dims_in": {
+        "l": 9,
+        "w": 3,
+        "h": 2
+      },
+      "dims_cm_approx": {
+        "l": 22.9,
+        "w": 7.6,
+        "h": 5.1
+      }
+    },
+    {
+      "label": "medium",
+      "qty": 8,
+      "dims_in": {
+        "l": 6,
+        "w": 3,
+        "h": 2
+      },
+      "dims_cm_approx": {
+        "l": 15.2,
+        "w": 7.6,
+        "h": 5.1
+      }
+    },
+    {
+      "label": "small",
+      "qty": 8,
+      "dims_in": {
+        "l": 3,
+        "w": 3,
+        "h": 2
+      },
+      "dims_cm_approx": {
+        "l": 7.6,
+        "w": 7.6,
+        "h": 5.1
+      }
+    }
+  ],
+  "material": "Clear durable plastic (PET)",
+  "pad_material": "silicone",
+  "color": "transparent",
+  "care": "Wipe with damp cloth; hand rinse OK — not dishwasher-safe in this pack",
+  "scenes": [
+    "makeup vanity",
+    "bathroom drawer",
+    "kitchen utensil drawer",
+    "office desk drawer",
+    "jewelry accessories"
+  ],
+  "certifications_claimed": [],
+  "forbidden_claims": [
+    "100% BPA-FREE",
+    "dishwasher safe",
+    "unbreakable",
+    "childproof",
+    "trusted by thousands",
+    "#1 bestseller"
+  ],
+  "notes": "T1 Listing Pack v0 golden fixture; demo placeholder brand"
+}

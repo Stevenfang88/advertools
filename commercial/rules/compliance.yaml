@@ -1,0 +1,82 @@
+# Compliance gate — multi-platform Listing (Step 0/1)
+# Not legal advice. Hard limits for generators.
+
+version: 1
+as_of: "2026-11-01"
+markets:
+  amazon_us:
+    title_max_chars: 75
+    item_highlights_max_chars: 125
+    bullet_min_chars: 10
+    bullet_max_chars: 255
+    backend_search_terms_max_bytes: 249
+    notes: "Non-media titles capped at 75 chars as of 2026-07-27; overflow -> Item Highlights."
+  shopee_id:
+    title_min_chars: 25
+    title_max_chars: 100
+    description_min_chars: 100
+    notes: "Prefer 25-100; avoid ALL-CAPS, promo spam, emoji/symbol stuffing."
+  shopee_th:
+    title_min_chars: 25
+    title_max_chars: 100
+    description_min_chars: 100
+    notes: "Thai title OK; 25-100; no ALL-CAPS Latin spam; no promo (ลดแรง / free shipping / best seller)."
+  shopee_ph:
+    title_min_chars: 25
+    title_max_chars: 100
+    description_min_chars: 100
+    notes: "English PH; 25-100; no ALL-CAPS; no promo (sale / free shipping / best seller / hot item)."
+  meli_mx:
+    title_max_chars: 60
+    notes: "Category max_title_length often ~60; no punctuation/symbols; Spanish nouns first; no Spanglish."
+  meli_br:
+    title_max_chars: 60
+    notes: "Title ≤60; no punctuation/symbols; Portuguese nouns first; no English product-noun stuffing."
+  meli_ar:
+    title_max_chars: 60
+    notes: "Title ≤60; no punctuation/symbols; Spanish AR nouns first; no Spanglish."
+
+banned_claim_patterns:
+  - pattern: "(?i)100%\\s*BPA[- ]?FREE"
+    reason: "Absolute BPA marketing without lab report"
+  - pattern: "(?i)dishwasher[- ]?safe"
+    reason: "Softened to wipe/hand-rinse only for this pack"
+  - pattern: "(?i)unbreakable|indestructible"
+    reason: "Overclaim"
+  - pattern: "(?i)childproof|baby[- ]?safe|CPSIA|ASTM"
+    reason: "Child-safety seals without certificates"
+  - pattern: "(?i)trusted by thousands|#\\s*1\\s*bestseller|best on the market"
+    reason: "Fake social proof"
+  - pattern: "(?i)sterile|antibacterial that kills|cure"
+    reason: "Medical/therapeutic"
+
+required_soft_language:
+  care: "wipe / hand-rinse; do not claim dishwasher-safe"
+  material: "clear durable plastic (PET) unless certs attached"
+  use: "home organization only — not medical storage"
+
+title_style:
+  amazon_us:
+    no_special_chars_except_brand: true
+    max_word_repeat: 2
+  shopee_id:
+    no_all_caps: true
+    no_promo_words: ["diskon", "gratis ongkir", "best seller", "hot item"]
+  shopee_th:
+    no_all_caps: true
+    no_promo_words: ["ลดแรง", "free shipping", "best seller", "hot item", "flash sale"]
+  shopee_ph:
+    no_all_caps: true
+    no_promo_words: ["sale", "free shipping", "best seller", "hot item"]
+  meli_mx:
+    no_punctuation: true
+    no_shipping_or_discount_in_title: true
+    no_english_product_nouns: true
+  meli_br:
+    no_punctuation: true
+    no_shipping_or_discount_in_title: true
+    no_english_product_nouns: true
+  meli_ar:
+    no_punctuation: true
+    no_shipping_or_discount_in_title: true
+    no_english_product_nouns: true

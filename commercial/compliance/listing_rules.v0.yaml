@@ -1,0 +1,84 @@
+# Adv-0 foundation — marketplace listing compliance (DRAFT)
+# 「可上架」标准只由总指挥小马定稿；本文件为地基草稿，等验收。
+version: "0.1.0"
+category: "抽屉收纳"
+status: draft_pending_pony_signoff
+
+title_limits:
+  amazon:
+    max_chars: 75
+    rule_id: TITLE_AM75
+  shopee:
+    max_chars: 100
+    rule_id: TITLE_SHOPEE100
+  meli:
+    # MELI practical hard limit ≈60; treat overage as fail
+    max_chars: 60
+    rule_id: TITLE_MELI60
+
+# Absolute bans — any hit in title, bullets, or description => fail
+forbidden:
+  - id: BAN_BPA_ABSOLUTE
+    severity: error
+    description: "禁止 BPA 绝对化宣称（如 BPA free / 绝对无BPA / 100%无BPA）"
+    patterns:
+      - "(?i)\\bbpa[\\s-]?free\\b"
+      - "(?i)绝对\\s*无?\\s*bpa"
+      - "(?i)100\\s*%\\s*无\\s*bpa"
+      - "(?i)完全\\s*无\\s*bpa"
+      - "(?i)不含\\s*bpa"
+
+  - id: BAN_DISHWASHER
+    severity: error
+    description: "禁止洗碗机相关宣称/适用说明"
+    patterns:
+      - "(?i)dishwasher"
+      - "洗碗机"
+      - "洗碗柜"
+
+  - id: BAN_MEDICAL_CHILDREN
+    severity: error
+    description: "禁止医疗/儿童相关宣称（含婴儿、幼儿、儿科、医疗器械暗示）"
+    patterns:
+      - "(?i)\\bmedical\\b"
+      - "(?i)\\bpediatric\\b"
+      - "(?i)\\binfant\\b"
+      - "(?i)\\bbaby\\b"
+      - "医疗"
+      - "医药"
+      - "儿童"
+      - "婴儿"
+      - "幼儿"
+      - "儿科"
+
+  - id: BAN_FAKE_SOCIAL_ID
+    severity: error
+    description: "禁止假社证 / 虚假身份证明相关内容"
+    patterns:
+      - "假社证"
+      - "假社保"
+      - "假身份证"
+      - "(?i)fake\\s*(ssn|social\\s*security)"
+      - "(?i)forged\\s*(id|identity)"
+
+  - id: BAN_COMPETITOR_TRADEMARK
+    severity: error
+    description: "禁止竞品商标（可扩展列表；草稿种子集）"
+    patterns:
+      - "(?i)\\bikea\\b"
+      - "(?i)\\bmuji\\b"
+      - "无印良品"
+      - "(?i)\\bthe\\s*container\\s*store\\b"
+      - "(?i)\\bsterit\\b"
+      - "宜家"
+
+# Fields scanned for forbidden patterns
+scan_fields:
+  - title
+  - bullet_points
+  - description
+
+evaluation:
+  pass_when: "no error-severity hits AND title length within marketplace limit"
+  fail_when: "any error-severity hit OR title exceeds marketplace limit"
+  output_statuses: ["pass", "fail"]
